@@ -2,50 +2,61 @@
 
 High-throughput transformation infrastructure for Kafka Connect pipelines.
 
-## Project Overview
+## Overview
 
-TAAS compiles mapping rules into runtime artifacts and applies them to complex nested payloads inside Kafka Connect pipelines. The goal is to produce sink-ready outputs for PostgreSQL and other downstream systems without requiring bespoke transformation code for every integration.
+TAAS is an early-stage infrastructure product focused on the transformation layer of event-driven data systems. It compiles mapping rules into runtime artifacts and applies them to complex nested payloads in Kafka Connect-style pipelines, producing sink-ready outputs for PostgreSQL and other downstream data platforms.
 
-## What Problem It Solves
+This public repository is intended to present the product, benchmark evidence, and operating focus for technical reviewers, startup programs, and cloud credit applications.
 
-- Reduces the operational cost of maintaining pipeline-specific transformation logic.
-- Handles nested, claims-style payloads that need deterministic extraction and sink-ready shaping.
-- Provides a benchmarkable runtime layer for teams evaluating throughput, sink behavior, and scale limits.
+## Why It Matters
 
-## Benchmark Summary
+Transformation logic is often the least reusable and least observable part of a data pipeline. As payloads become more nested and downstream requirements become stricter, teams end up maintaining brittle, sink-specific code paths that are hard to scale and expensive to operate.
 
-- Sustained `49,996.71 messages/sec` for `10 minutes` on claims-style payloads of roughly `11 KB`, with matched producer, SMT, and PostgreSQL counters.
-- A `100,000 messages/sec` target over `1 minute` achieved about `70,049/sec` SMT throughput and about `70,439/sec` PostgreSQL throughput in-window, then drained the remaining backlog afterward.
-- A `200,000 messages/sec` target over `1 minute` scaled to `12` tasks and reached about `121,103/sec` SMT throughput and about `122,283/sec` PostgreSQL throughput in-window.
-- A `200,000 messages/sec` target over `5 minutes` with `12` tasks held about `80,041/sec` SMT throughput and about `80,289/sec` PostgreSQL throughput in-window, indicating downstream saturation under longer heavy runs.
+TAAS is being built to make that layer more repeatable, benchmarkable, and production-oriented, with emphasis on throughput, sink compatibility, and operational safety.
 
-Additional detail is available in [docs/benchmark-summary.md](./docs/benchmark-summary.md).
+## Benchmark Highlights
 
-## Current Focus
+### Sustained
 
-- Validate multi-worker and higher-scale deployment topologies.
-- Improve sustained heavy-load performance across downstream sinks.
-- Package benchmark, deployment, and runtime artifacts for repeatable infrastructure evaluation.
+- Tested on realistic claims-style payloads around `~11 KB` each.
+- Sustained `50k messages/sec` for `10 minutes`.
+- Producer, SMT, and PostgreSQL counters matched for the full benchmark window.
+- No additional drain was required after the run completed.
 
-## Repo Structure
+### Burst
 
-- `taas-backend/` - control-plane and backend services.
-- `taas-smt/` and `taas-smt-e62/` - Kafka Connect SMT runtime and related implementation work.
-- `benchmarks/` - benchmark tooling, payloads, and scripts.
-- `deploy/` - deployment configurations and environment assets.
-- `docs/` - benchmark summaries, runbooks, and supporting documentation.
-- `ui/` - operator and mapping workflow UI.
+- At `100k/sec` for `1 minute`, the system achieved about `70k/sec` in-window.
+- Backlog accumulated during the burst and drained afterward.
 
-## Getting Started
+### Heavy-Load Scaling
 
-Getting-started documentation is being consolidated. For now, start with:
+- At `200k/sec` for `1 minute`, higher task counts reached about `121k/sec` SMT throughput in-window and about `122k/sec` PostgreSQL throughput in-window.
+- Full-drain throughput for that short heavy run reached about `99k/sec`.
+- At `200k/sec` for `5 minutes` with `12` tasks, the system sustained about `80k/sec` in-window and about `70k/sec` to full drain.
+- The longer heavy run indicated downstream saturation under extended load rather than a cleanly balanced end-to-end state.
 
-1. `docs/benchmark-summary.md` for current performance positioning.
-2. `deploy/` for local and benchmark-oriented environment assets.
-3. `taas-backend/` for backend services.
-4. `taas-smt/` and `taas-smt-e62/` for transformation runtime work.
+Additional benchmark context: [benchmark deck link]
 
-## Contact
+## Why We Need Cloud Credits
 
-- Repository: [TAAS-LAB/TAAS](https://github.com/TAAS-LAB/TAAS)
-- Email: [team@your-domain.com](mailto:team@your-domain.com)
+- Validate horizontal scale on production-style infrastructure rather than a single constrained test setup.
+- Test multiple brokers, multiple Connect workers, and multiple downstream sink configurations.
+- Measure sustained throughput, burst recovery, and cost/performance behavior at larger scale.
+- Establish clearer operating envelopes for heavy-load and long-duration workloads.
+
+## Code Availability
+
+TAAS is currently a private-code startup project. Core implementation, internal deployment assets, and runtime code are not public at this stage.
+
+This repository is intentionally public as a product and benchmarking profile for reviewers who need a concise view of what TAAS does, what has been measured so far, and why additional infrastructure credits are needed.
+
+## Contact / Links
+
+- GitHub organization: [GitHub org link]
+- Product repository profile: [TAAS public profile link]
+- Benchmark materials: [benchmark deck link]
+- Contact: [email]
+
+## Summary
+
+TAAS is building a transformation platform for Kafka Connect pipelines with an emphasis on high-throughput runtime execution, downstream sink compatibility, and disciplined benchmark validation. The public profile is limited by design, but the benchmark record already supports serious infrastructure evaluation and larger-scale testing.
