@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TAAS | High-throughput transformation platform</title>
+    <meta
+      name="description"
+      content="TAAS is a high-throughput transformation platform for Kafka Connect pipelines, focused on sink-ready output shaping, benchmark validation, and production-style scale testing."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="TAAS home">
+          <span class="brand-mark" aria-hidden="true">T</span>
+          <span class="brand-text">TAAS</span>
+        </a>
+        <nav class="topnav" aria-label="Primary">
+          <a href="#why">Why it matters</a>
+          <a href="#benchmarks">Benchmarks</a>
+          <a href="#credits">Cloud credits</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero section">
+          <div class="hero-copy" data-reveal>
+            <p class="eyebrow">Enterprise Streaming Infrastructure</p>
+            <h1>TAAS</h1>
+            <p class="tagline">
+              High-throughput transformation platform for Kafka Connect pipelines
+            </p>
+            <p class="hero-text">
+              TAAS compiles mapping rules into runtime artifacts and applies them
+              to complex nested event payloads in Kafka Connect-style data flows.
+              The result is sink-ready output shaping for downstream systems such
+              as PostgreSQL and other data platforms.
+            </p>
+            <p class="hero-text">
+              This public site is intentionally product-focused. Core
+              implementation remains private while benchmarking, hardening, and
+              broader rollout preparation continue.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                href="https://github.com/TAAS-LAB/taas-public-profile"
+                target="_blank"
+                rel="noreferrer"
+              >
+                View GitHub
+              </a>
+              <a class="button button-secondary" href="#contact">Contact</a>
+              <a class="button button-secondary" href="#benchmarks">
+                Benchmark Summary
+              </a>
+            </div>
+          </div>
+
+          <aside class="hero-panel" data-reveal>
+            <div class="signal-card">
+              <p class="signal-label">Validated sustained benchmark</p>
+              <p class="signal-value">50k msg/sec</p>
+              <p class="signal-detail">
+                10-minute run on realistic claims-style payloads with matched
+                producer, SMT, and PostgreSQL counters.
+              </p>
+            </div>
+            <div class="hero-grid" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section" id="why">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Why It Matters</p>
+            <h2>Built for transformation as infrastructure, not one-off glue code</h2>
+          </div>
+          <div class="card-grid card-grid-three">
+            <article class="info-card" data-reveal>
+              <h3>Mapping-driven transformation</h3>
+              <p>
+                Compiles mapping rules into runtime artifacts so complex nested
+                payload shaping can be managed as a repeatable platform concern.
+              </p>
+            </article>
+            <article class="info-card" data-reveal>
+              <h3>Enterprise throughput</h3>
+              <p>
+                Designed around high-throughput Kafka Connect-style execution with
+                benchmark evidence that focuses on real counters rather than
+                synthetic claims.
+              </p>
+            </article>
+            <article class="info-card" data-reveal>
+              <h3>Sink-ready delivery</h3>
+              <p>
+                Produces downstream-ready outputs for PostgreSQL and other target
+                platforms while keeping sink compatibility and operational safety
+                in view.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="benchmarks">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Benchmark Highlights</p>
+            <h2>Measured against realistic claims-style payloads around ~11 KB</h2>
+          </div>
+          <div class="card-grid card-grid-benchmarks">
+            <article class="metric-card" data-reveal>
+              <p class="metric-kicker">50k sustained</p>
+              <h3>10 minutes, fully matched</h3>
+              <p class="metric-value">50k/sec</p>
+              <p>
+                Producer, SMT, and PostgreSQL counters matched for the full run,
+                with no additional drain required after the benchmark window.
+              </p>
+            </article>
+            <article class="metric-card" data-reveal>
+              <p class="metric-kicker">100k burst</p>
+              <h3>Short-window burst behavior</h3>
+              <p class="metric-value">~70k/sec</p>
+              <p>
+                A 1-minute burst achieved roughly 70k/sec in-window, then drained
+                the backlog afterward.
+              </p>
+            </article>
+            <article class="metric-card" data-reveal>
+              <p class="metric-kicker">200k burst peak</p>
+              <h3>Heavy scaling at 12 tasks</h3>
+              <p class="metric-value">121k / 122k</p>
+              <p>
+                At 200k/sec for 1 minute, the run reached about 121k/sec SMT
+                in-window and about 122k/sec PostgreSQL in-window, with about
+                99k/sec to full drain.
+              </p>
+            </article>
+            <article class="metric-card" data-reveal>
+              <p class="metric-kicker">200k heavy, 5 minutes</p>
+              <h3>Longer-run downstream limit</h3>
+              <p class="metric-value">~80k/sec</p>
+              <p>
+                The longer heavy run sustained about 80k/sec in-window and about
+                70k/sec to full drain, showing downstream saturation over the
+                extended window.
+              </p>
+            </article>
+          </div>
+          <p class="benchmark-note" data-reveal>
+            Short-window peak throughput is higher than long-window sustained heavy
+            throughput, which is consistent with downstream saturation emerging
+            over longer runs.
+          </p>
+        </section>
+
+        <section class="section section-accent" id="credits">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Why We Need Cloud Credits</p>
+            <h2>Local benchmark evidence is strong. The next step is production-style scale validation.</h2>
+          </div>
+          <div class="two-column">
+            <div class="info-card" data-reveal>
+              <p>
+                Current results already validate meaningful throughput on realistic
+                payloads. Cloud credits are needed to extend that work into broader
+                horizontal scale testing and more representative infrastructure
+                topologies.
+              </p>
+            </div>
+            <div class="checklist-card" data-reveal>
+              <ul class="feature-list">
+                <li>Multiple brokers under controlled load</li>
+                <li>Multiple Kafka Connect workers</li>
+                <li>Downstream sink validation across configurations</li>
+                <li>Sustained throughput and burst recovery measurement</li>
+                <li>Cost/performance analysis at larger scale</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="availability">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Code Availability</p>
+            <h2>Private implementation, public product profile</h2>
+          </div>
+          <div class="info-card info-card-wide" data-reveal>
+            <p>
+              Core implementation is private at this stage while the platform is
+              being hardened, benchmarked, and prepared for broader rollout.
+            </p>
+            <p>
+              Public materials focus on product direction, validated benchmark
+              results, and the operating context needed for technical review and
+              cloud credit evaluation.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Contact / Links</p>
+            <h2>Interested in the benchmark record or infrastructure roadmap?</h2>
+          </div>
+          <div class="card-grid card-grid-three">
+            <article class="link-card" data-reveal>
+              <h3>GitHub organization</h3>
+              <a href="#" aria-label="Replace with GitHub organization link">
+                [GitHub org link]
+              </a>
+            </article>
+            <article class="link-card" data-reveal>
+              <h3>Benchmark deck</h3>
+              <a href="#" aria-label="Replace with benchmark deck link">
+                [benchmark deck link]
+              </a>
+            </article>
+            <article class="link-card" data-reveal>
+              <h3>Contact</h3>
+              <a href="#" aria-label="Replace with contact email">
+                [email]
+              </a>
+            </article>
+          </div>
+          <div class="closing-panel" data-reveal>
+            <p>
+              TAAS is positioning transformation as a benchmarked infrastructure
+              layer for Kafka Connect pipelines, with measured evidence already in
+              place and broader scale validation still ahead.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
